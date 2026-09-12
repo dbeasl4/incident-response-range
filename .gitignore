@@ -1,0 +1,19 @@
+# Telemetry output changes every run -- don't commit it
+telemetry/*.jsonl
+telemetry/*.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# C++ build artifacts
+build/
+*.o
+*.out
+
+# Miniconda/conda
+.conda/
+
+# OS
+.DS_Store

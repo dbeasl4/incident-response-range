@@ -1,0 +1,64 @@
+version: '3.8'
+
+# AI Incident-Response Test Range -- HF-01 Scenario
+# --------------------------------------------------
+# Four containers, one network, one shared telemetry volume.
+#
+# proxy        -- intercepts ALL agent HTTP traffic, checks authorization
+#                 envelope, emits labeled telemetry to ./telemetry/events.jsonl
+# internal_api -- mock api.internal and db.internal (legitimate targets)
+# external_drop-- mock external-drop.example (the exfiltration target)
+# agent        -- scripted agent that walks the HF-01 chain
+#
+# Run: docker compose up --build
+# Output: ./telemetry/events.jsonl (ground-truth labeled event stream)
+
+services:
+
+  proxy:
+    build: ./proxy
+    environment:
+      - TELEMETRY_PATH=/telemetry/events.jsonl
+      - PROXY_PORT=8080
+    volumes:
+      - ./telemetry:/telemetry
+    networks:
+      - incident_range
+    # No ports exposed to host -- only the agent uses it
+
+  internal_api:
+    build: ./services
+    command: python3 internal_api.py
+    networks:
+      incident_range:
+        aliases:
+          - api.internal
+          - db.internal
+
+  external_drop:
+    build: ./services
+    command: python3 external_drop.py
+    volumes:
+      - ./telemetry:/telemetry
+    networks:
+      incident_range:
+        aliases:
+          - external-drop.example
+
+  agent:
+    build: ./agent
+    environment:
+      - HTTP_PROXY=http://proxy:8080
+      - DB_READ_01=authorized-db-key-12345
+    volumes:
+      - ./telemetry:/telemetry
+    depends_on:
+      - proxy
+      - internal_api
+      - external_drop
+    networks:
+      - incident_range
+
+networks:
+  incident_range:
+    driver: bridge
