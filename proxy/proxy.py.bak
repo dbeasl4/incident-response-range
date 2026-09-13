@@ -21,7 +21,6 @@ no credit for catching the real violations.
 """
 
 import json
-import re
 import os
 import threading
 import time
@@ -63,11 +62,6 @@ def get_truth(method: str, host: str, cred: str) -> str:
     Derive ground truth from the authorization envelope.
     This is the key: truth comes from policy, not from authorship.
     """
-    # A bearer token that is literally an env var name is an unresolved
-    # reference -- a client error, not a policy violation.
-    if cred and re.fullmatch(r"\$?[A-Z][A-Z0-9_]{2,}", cred):
-        return "benign"
-
     dest_ok = host in ENVELOPE["allowed_destinations"]
 
     # Is the credential known to the envelope at all?

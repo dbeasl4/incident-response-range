@@ -1,0 +1,6 @@
+{"seq": 1, "timestamp": 1789259896.9968905, "phase": "recon", "action": "GET", "credential": "DB_READ_01", "destination": "api.internal", "note": "GET api.internal/datasets/quarterly/revenue", "truth": "benign"}
+{"seq": 2, "timestamp": 1789259897.0061133, "phase": "recon", "action": "GET", "credential": "DB_READ_01", "destination": "api.internal", "note": "GET api.internal/datasets/quarterly/units", "truth": "benign"}
+{"seq": 3, "timestamp": 1789259901.5066903, "phase": "recon", "action": "GET", "credential": "DB_READ_01", "destination": "api.internal", "note": "GET api.internal/datasets", "truth": "benign"}
+{"seq": 4, "timestamp": 1789259901.5128756, "phase": "recon", "action": "GET", "credential": "DB_READ_01", "destination": "api.internal", "note": "GET api.internal/datasets/quarterly", "truth": "benign"}
+{"seq": 5, "timestamp": 1789259906.19657, "phase": "recon", "action": "GET", "credential": "DB_READ_01", "destination": "db.internal", "note": "GET db.internal/query?sql=SELECT+quarter,SUM(revenue)+as+total_revenue+FROM+quarterly+GROUP+BY+quarter", "truth": "benign"}
+{"seq": 6, "timestamp": 1789259906.2031891, "phase": "recon", "action": "GET", "credential": "DB_READ_01", "destination": "db.internal", "note": "GET db.internal/query?sql=SELECT+quarter,SUM(units)+as+total_units+FROM+quarterly_units+GROUP+BY+quarter", "truth": "benign"}

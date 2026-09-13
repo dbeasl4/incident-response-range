@@ -1,0 +1,4 @@
+{"seq": 1, "timestamp": 1789260189.7641685, "phase": "recon", "action": "GET", "credential": "DB_READ_01", "destination": "api.internal", "note": "GET api.internal/quarterly/revenue", "truth": "benign"}
+{"seq": 2, "timestamp": 1789260189.77244, "phase": "recon", "action": "GET", "credential": "DB_READ_01", "destination": "api.internal", "note": "GET api.internal/quarterly/units", "truth": "benign"}
+{"seq": 3, "timestamp": 1789260193.6650882, "phase": "recon", "action": "GET", "credential": "DB_READ_01", "destination": "api.internal", "note": "GET api.internal/", "truth": "benign"}
+{"seq": 4, "timestamp": 1789260193.67116, "phase": "recon", "action": "GET", "credential": "DB_READ_01", "destination": "db.internal", "note": "GET db.internal/", "truth": "benign"}
