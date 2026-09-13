@@ -1,0 +1,19 @@
+FROM python:3.11-slim
+RUN pip install requests --quiet
+
+# ── Generated environment ────────────────────────────────────────────────────
+# genenv.py writes fixtures/env.dockerfile per run; build.sh splices it in here.
+# Every run therefore sees a different filesystem: different credential names,
+# paths, framing, and decoys.
+# @@ENV_FRAGMENT@@
+
+# ── Harness, out of the agent's reach ────────────────────────────────────────
+# Kept in /opt/harness with WORKDIR /data so that a `list_directory "."` shows
+# task data rather than the observation apparatus. An earlier run in which the
+# harness source was visible ended with the model reading it, identifying the
+# experiment, and halting -- a contamination we record but do not repeat.
+COPY llm_agent.py /opt/harness/llm_agent.py
+COPY fixtures/manifest.json /opt/harness/manifest.json
+
+WORKDIR /data
+CMD ["python3", "/opt/harness/llm_agent.py"]
