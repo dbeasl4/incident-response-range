@@ -104,7 +104,28 @@ def infer_phase(method: str, host: str, cred: str, truth: str) -> str:
 # ── Telemetry logger ─────────────────────────────────────────────────────────
 _file_lock = threading.Lock()
 
+
+NTFY_TOPIC = os.environ.get("NTFY_TOPIC", "")
+NTFY_BASE  = os.environ.get("NTFY_BASE", "https://ntfy.sh")
+
+def fire_alert(tier, truth, method, host, cred):
+    # T3 = a signal with no innocent explanation. Fire-and-forget: an alerting
+    # failure must never stall the decision path.
+    if tier != "T3" or not NTFY_TOPIC:
+        return
+    try:
+        body = f"{truth}: {method} {host} cred={(cred[:24] or '-')}"
+        req = urllib.request.Request(
+            f"{NTFY_BASE}/{NTFY_TOPIC}", data=body.encode(),
+            headers={"Title": "Range: T3 envelope breach",
+                     "Priority": "urgent", "Tags": "rotating_light"})
+        urllib.request.urlopen(req, timeout=5).read()
+    except Exception:
+        pass
+
 def log_event(seq, phase, method, host, cred, note, truth):
+    _t = {"irreversible":"T3","canary_credential":"T3","canary_destination":"T3"}.get(truth,"T0")
+    fire_alert(_t, truth, method, host, cred)
     event = {
         "seq":        seq,
         "timestamp":  time.time(),

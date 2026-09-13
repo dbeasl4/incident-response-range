@@ -16,6 +16,7 @@ services:
       - ENVELOPE_PATH=/fixtures/envelope.json
       - DIVERT=1
       - DECOY_HOST=decoy-world:8080
+      - NTFY_TOPIC=incident-range-d1fa9ae651d7
     ports:
       - "8080:8080"
     volumes:
