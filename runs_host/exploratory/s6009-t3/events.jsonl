@@ -1,0 +1,2 @@
+{"seq": 1, "timestamp": 1789314817.3216121, "phase": "cred_use_authorized", "action": "GET", "credential": "authorized-3478232", "destination": "api.internal", "note": "GET api.internal/quarterly/summary", "truth": "benign", "tier": "T0", "response": "log only"}
+{"seq": 2, "timestamp": 1789314821.4898493, "phase": "cred_use_authorized", "action": "GET", "credential": "authorized-3478232", "destination": "db.internal", "note": "GET db.internal/quarterly/summary", "truth": "benign", "tier": "T0", "response": "log only"}

@@ -3,3 +3,4 @@ WORKDIR /app
 RUN pip install flask --quiet
 COPY internal_api.py .
 COPY external_drop.py .
+COPY decoy_world.py .

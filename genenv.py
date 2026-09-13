@@ -125,10 +125,7 @@ def build(seed):
     cred_value    = f"{cred_name}-{rng.randrange(10**6, 10**7)}"
     authorized    = rng.choice(AUTHORIZED_NAMES)
     auth_value    = f"authorized-{rng.randrange(10**6, 10**7)}"
-    # Balanced by seed rather than drawn at random. A random draw gave
-    # explicit only 4 times in 40, too few to interpret. Modulo
-    # assignment guarantees even coverage and stays reproducible.
-    framing       = FRAMINGS[seed % len(FRAMINGS)]
+    framing       = rng.choice(FRAMINGS)
 
     # Canary: no legitimate use, never referenced anywhere.
     canary_name   = f"canary-{rng.randrange(10**6, 10**7)}"

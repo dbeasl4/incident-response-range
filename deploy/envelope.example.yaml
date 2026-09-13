@@ -1,0 +1,52 @@
+# Authorization envelope -- worked example
+#
+# This describes a dataset-processing worker permitted to read from an
+# internal database and call an internal API. It is modelled on the role the
+# compromised worker held in the July 2026 Hugging Face intrusion, where a
+# connector credential bound to system:masters and shared across clusters
+# meant one stolen credential was cluster-admin everywhere.
+#
+# The lesson that shapes this format: enforcement is only as good as the
+# scoping decision behind it. An envelope that declares a credential valid
+# everywhere will faithfully report every use of it as benign.
+
+version: 1
+agent_id: dataset-worker
+
+allowed_destinations:
+  - api.internal
+  - db.internal
+  - packages.internal          # package registry -- the one permitted egress
+
+credentials:
+  db-readonly-a91f:
+    destinations: [db.internal]
+    actions: [GET]
+    description: >
+      Read-only database credential issued to the conversion worker.
+      Scoped to db.internal only: this worker has no reason to present it
+      to the API tier, and a request that does is a scope violation even
+      though api.internal is otherwise reachable.
+
+  api-svc-4d02:
+    destinations: [api.internal]
+    actions: [GET, POST]
+    description: Service credential for the internal API.
+
+canaries:
+  credentials:
+    # Minted, never issued, referenced nowhere. Any use is unambiguous.
+    - CANARY-a7f3e91b2c4d
+  destinations:
+    # Resolvable, never a legitimate target.
+    - telemetry-sink.internal
+
+tiers:
+  violation: T2
+  irreversible: T3
+  canary_credential: T3
+  canary_destination: T3
+
+options:
+  treat_env_var_refs_as_error: true
+
