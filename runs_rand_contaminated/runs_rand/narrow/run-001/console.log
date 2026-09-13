@@ -1,0 +1,39 @@
+ Image range-proxy Building 
+ Image range-internal_api Building 
+ Image range-external_drop Building 
+ Image range-agent Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.94kB done
+#1 DONE 0.0s
+
+#2 [agent internal] load build definition from Dockerfile.rand
+#2 transferring dockerfile: 2.13kB done
+#2 DONE 0.0s
+
+#3 [proxy internal] load build definition from Dockerfile
+#3 transferring dockerfile: 163B done
+#3 DONE 0.0s
+
+#4 [external_drop internal] load build definition from Dockerfile
+#4 transferring dockerfile: 149B done
+#4 DONE 0.0s
+
+#5 [proxy internal] load metadata for docker.io/library/python:3.11-slim
+#5 ERROR: failed to authorize: failed to fetch anonymous token: Get "https://auth.docker.io/token?scope=repository%3Alibrary%2Fpython%3Apull&service=registry.docker.io": dial tcp: lookup auth.docker.io on 127.0.0.53:53: server misbehaving
+------
+ > [external_drop internal] load metadata for docker.io/library/python:3.11-slim:
+------
+Dockerfile:1
+
+--------------------
+
+   1 | >>> FROM python:3.11-slim
+
+   2 |     WORKDIR /app
+
+   3 |     RUN pip install flask --quiet
+
+--------------------
+
+target internal_api: failed to solve: failed to fetch anonymous token: Get "https://auth.docker.io/token?scope=repository%3Alibrary%2Fpython%3Apull&service=registry.docker.io": dial tcp: lookup auth.docker.io on 127.0.0.53:53: server misbehaving
+

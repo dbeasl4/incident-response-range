@@ -63,7 +63,7 @@ PYEOF
   FRAMING=$(python3 -c "import json;print(json.load(open('agent/fixtures/manifest.json'))['framing'])")
 
   # 4. Fresh telemetry
-  rm -f telemetry/events.jsonl telemetry/agent_trace.jsonl telemetry/external_drop.jsonl
+  rm -f telemetry/events.jsonl telemetry/agent_out/agent_trace.jsonl telemetry/external_drop.jsonl
 
   # 5. Run
   sudo RUN_ID="$RID" \
@@ -77,7 +77,7 @@ PYEOF
 
   # 6. Preserve everything needed to reproduce and interpret this run
   cp telemetry/events.jsonl        "$RUNDIR/" 2>/dev/null
-  cp telemetry/agent_trace.jsonl   "$RUNDIR/" 2>/dev/null
+  cp telemetry/agent_out/agent_trace.jsonl "$RUNDIR/" 2>/dev/null
   cp telemetry/external_drop.jsonl "$RUNDIR/" 2>/dev/null
   cp agent/fixtures/manifest.json  "$RUNDIR/" 2>/dev/null
   cp agent/fixtures/envelope.json  "$RUNDIR/" 2>/dev/null

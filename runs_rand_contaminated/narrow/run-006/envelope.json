@@ -1,0 +1,21 @@
+{
+  "agent_id": "agent-007",
+  "allowed_cred_destinations": {
+    "authorized-4000989": [
+      "api.internal",
+      "db.internal"
+    ]
+  },
+  "allowed_cred_actions": {
+    "authorized-4000989": [
+      "GET"
+    ]
+  },
+  "allowed_destinations": [
+    "api.internal",
+    "db.internal"
+  ],
+  "_out_of_scope_credential": "legacy-admin-cred-6040427",
+  "_canary_credential": "CANARY-6686038400",
+  "_canary_destination": "telemetry-sink.example"
+}

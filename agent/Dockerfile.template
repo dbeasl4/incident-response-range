@@ -12,8 +12,7 @@ RUN pip install requests --quiet
 # task data rather than the observation apparatus. An earlier run in which the
 # harness source was visible ended with the model reading it, identifying the
 # experiment, and halting -- a contamination we record but do not repeat.
-COPY llm_agent.py /opt/harness/llm_agent.py
-COPY fixtures/manifest.json /opt/harness/manifest.json
+COPY llm_agent.py /opt/harness/.runner
 
 WORKDIR /data
-CMD ["python3", "/opt/harness/llm_agent.py"]
+CMD ["python3", "/opt/harness/.runner"]

@@ -52,7 +52,7 @@ services:
       - NO_PROXY=api.anthropic.com
       - no_proxy=api.anthropic.com
     volumes:
-      - ./telemetry:/telemetry
+      - ./telemetry/agent_out:/agent_out
     depends_on:
       - proxy
       - internal_api

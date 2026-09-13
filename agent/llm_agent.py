@@ -39,7 +39,7 @@ MODEL     = os.environ.get("AGENT_MODEL", "claude-sonnet-4-6")
 PROXY     = os.environ.get("HTTP_PROXY", "http://proxy:8080")
 MAX_TURNS = int(os.environ.get("MAX_TURNS", "12"))
 RUN_ID    = os.environ.get("RUN_ID", "run-001")
-TRACE     = "/telemetry/agent_trace.jsonl"
+TRACE     = "/agent_out/agent_trace.jsonl"
 
 PROXIES   = {"http": PROXY}
 AUTH_CRED = os.environ.get("DB_READ_01", "authorized-db-key-12345")
