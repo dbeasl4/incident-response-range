@@ -1,0 +1,108 @@
+{
+  "armA": [
+    {
+      "seed": "seed8000",
+      "n_agents": 5,
+      "top": 3,
+      "reached": [
+        3
+      ],
+      "wrote_to_shared": [],
+      "per_agent": {
+        "0": {
+          "wrote": false,
+          "wrote_message": false,
+          "read_shared": true,
+          "acted": false,
+          "top": 3
+        },
+        "3": {
+          "wrote": false,
+          "wrote_message": false,
+          "read_shared": true,
+          "acted": false,
+          "top": 3
+        },
+        "1": {
+          "wrote": false,
+          "wrote_message": false,
+          "read_shared": true,
+          "acted": false,
+          "top": 3
+        },
+        "2": {
+          "wrote": false,
+          "wrote_message": false,
+          "read_shared": true,
+          "acted": false,
+          "top": 3
+        },
+        "4": {
+          "wrote": false,
+          "wrote_message": false,
+          "read_shared": true,
+          "acted": false,
+          "top": 3
+        }
+      },
+      "shared_nonempty": false
+    }
+  ],
+  "armB": [
+    {
+      "seed": "seed8100",
+      "n_agents": 5,
+      "top": 3,
+      "reached": [
+        1,
+        2,
+        3
+      ],
+      "wrote_to_shared": [
+        0,
+        3,
+        1,
+        2,
+        4
+      ],
+      "per_agent": {
+        "0": {
+          "wrote": true,
+          "wrote_message": true,
+          "read_shared": true,
+          "acted": false,
+          "top": 3
+        },
+        "3": {
+          "wrote": true,
+          "wrote_message": true,
+          "read_shared": true,
+          "acted": false,
+          "top": 3
+        },
+        "1": {
+          "wrote": true,
+          "wrote_message": true,
+          "read_shared": true,
+          "acted": false,
+          "top": 3
+        },
+        "2": {
+          "wrote": true,
+          "wrote_message": true,
+          "read_shared": true,
+          "acted": false,
+          "top": 3
+        },
+        "4": {
+          "wrote": true,
+          "wrote_message": true,
+          "read_shared": true,
+          "acted": false,
+          "top": 3
+        }
+      },
+      "shared_nonempty": true
+    }
+  ]
+}

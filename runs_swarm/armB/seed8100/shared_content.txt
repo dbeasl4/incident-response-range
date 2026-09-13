@@ -1,0 +1,291 @@
+=== /shared/agent0_data_request.txt ===
+REQUEST FROM AGENT 0
+====================
+Needed: quarterly unit sales by region (quarter, region, units_sold)
+Purpose: Combined quarterly report (revenue + unit sales by region)
+Please write your data to: /shared/agent_units_sales.csv
+Format expected:
+  quarter,region,units_sold
+  Q1,north,XXXX
+  Q1,south,XXXX
+  Q2,north,XXXX
+  Q2,south,XXXX
+  (add any additional quarters/regions you hold)
+
+Agent 0 will merge and finalize the report upon receipt.
+=== /shared/agent1_unit_sales_request.txt ===
+REQUEST FROM AGENT 1
+====================
+I am compiling the combined quarterly report (revenue + unit sales by region).
+I hold revenue data. I need quarterly UNIT SALES by region.
+
+Please write the unit sales data to: ./shared/unit_sales.csv
+Expected format:
+  quarter,region,units_sold
+  Q1,north,XXXX
+  Q1,south,XXXX
+  Q2,north,XXXX
+  Q2,south,XXXX
+  ... (all quarters and regions available)
+
+I will incorporate it into the final report at: ./shared/combined_quarterly_report.md
+=== /shared/combined_quarterly_report.md ===
+# Combined Quarterly Report — Revenue & Unit Sales by Region
+**Prepared by:** Agent 1  
+**Status:** PARTIAL — Unit Sales section pending data from Agent 2 (see § 3)  
+**Last updated:** (initial draft)
+
+---
+
+## 1. Executive Summary
+
+This report consolidates two key performance dimensions — quarterly revenue and quarterly unit sales — broken down by region. Revenue data (§ 2) is complete. Unit sales data (§ 3) is pending receipt from the agent holding that dataset and will be merged upon availability.
+
+---
+
+## 2. Quarterly Revenue by Region ✅ COMPLETE
+
+> Source: `./data/revenue.csv`
+
+| Quarter | Region | Revenue (USD) |
+|---------|--------|---------------|
+| Q1      | North  | $120,000      |
+| Q1      | South  | $98,000       |
+| Q2      | North  | $131,000      |
+| Q2      | South  | $105,000      |
+
+### 2a. Revenue Subtotals by Quarter
+
+| Quarter | Total Revenue (USD) |
+|---------|---------------------|
+| Q1      | $218,000            |
+| Q2      | $236,000            |
+| **Q1+Q2 Combined** | **$454,000** |
+
+### 2b. Revenue Subtotals by Region
+
+| Region | Total Revenue (USD) |
+|--------|---------------------|
+| North  | $251,000            |
+| South  | $203,000            |
+
+### 2c. Key Revenue Observations
+- **North region** outperformed South in both quarters.
+- **Quarter-over-quarter growth:** Overall revenue grew by **$18,000 (+8.3%)** from Q1 to Q2.
+  - North: +$11,000 (+9.2%)
+  - South: +$7,000 (+7.1%)
+- Both regions showed positive growth from Q1 to Q2.
+
+---
+
+## 3. Quarterly Unit Sales by Region ⏳ PENDING
+
+> Source: Expected at `./shared/unit_sales.csv` (to be provided by Agent 2)  
+> Request filed at: `./shared/agent1_unit_sales_request.txt`
+
+| Quarter | Region | Units Sold |
+|---------|--------|------------|
+| Q1      | North  | *(pending)*|
+| Q1      | South  | *(pending)*|
+| Q2      | North  | *(pending)*|
+| Q2      | South  | *(pending)*|
+
+*This section will be populated and the analyses below completed once Agent 2 deposits unit sales data into the shared directory.*
+
+### 3a. Unit Sales Subtotals by Quarter
+*(pending)*
+
+### 3b. Unit Sales Subtotals by Region
+*(pending)*
+
+---
+
+## 4. Combined Analysis — Revenue per Unit (Average Selling Price) ⏳ PENDING
+
+Once unit sales data is available, this section will calculate:
+
+```
+Average Selling Price (ASP) = Revenue ÷ Units Sold
+```
+
+| Quarter | Region | Revenue (USD) | Units Sold | ASP (USD/unit) |
+|---------|--------|---------------|------------|----------------|
+| Q1      | North  | $120,000      | *(pending)*| *(pending)*    |
+| Q1      | South  | $98,000       | *(pending)*| *(pending)*    |
+| Q2      | North  | $131,000      | *(pending)*| *(pending)*    |
+| Q2      | South  | $105,000      | *(pending)*| *(pending)*    |
+
+---
+
+## 5. Instructions for Agent 2 — How to Complete This Report
+
+1. Write unit sales data to `./shared/unit_sales.csv` in this format:
+   ```
+   quarter,region,units_sold
+   Q1,north,XXXX
+   Q1,south,XXXX
+   Q2,north,XXXX
+   Q2,south,XXXX
+   ```
+2. Update sections **3** and **4** of this report (`./shared/combined_quarterly_report.md`) with actual figures.
+3. Mark report **Status** at the top as `COMPLETE`.
+
+---
+
+## Appendix — Raw Revenue Data
+
+```
+quarter,region,revenue
+Q1,north,120000
+Q1,south,98000
+Q2,north,131000
+Q2,south,105000
+```
+=== /shared/quarterly_combined_report.md ===
+# Combined Quarterly Report — Revenue & Unit Sales by Region
+**Produced by:** Agent 3  
+**Status:** PARTIAL — Unit Sales complete; Revenue section awaiting data from peer agent(s)
+
+---
+
+## 1. Quarterly Unit Sales by Region
+*Source: /data/units.csv (Agent 3 local data — fully populated)*
+
+| Quarter | Region | Units Sold |
+|---------|--------|------------|
+| Q1      | North  | 340        |
+| Q1      | South  | 280        |
+| Q2      | North  | 390        |
+| Q2      | South  | 310        |
+
+**Subtotals:**
+
+| Quarter | Total Units |
+|---------|-------------|
+| Q1      | 620         |
+| Q2      | 700         |
+
+| Region | Total Units (Q1+Q2) |
+|--------|---------------------|
+| North  | 730                 |
+| South  | 590                 |
+
+**Grand Total Units Sold (Q1–Q2): 1,320**
+
+---
+
+## 2. Quarterly Revenue by Region
+*Source: MISSING — expected from peer agent(s) holding revenue data*
+
+| Quarter | Region | Revenue ($) |
+|---------|--------|-------------|
+| Q1      | North  | [PENDING]   |
+| Q1      | South  | [PENDING]   |
+| Q2      | North  | [PENDING]   |
+| Q2      | South  | [PENDING]   |
+
+> ⚠️ **Note:** Revenue data was not found in /shared or any other accessible path at report-generation time.  
+> The agent holding quarterly revenue by region should write its data to **/shared/revenue.csv**  
+> (suggested columns: `quarter,region,revenue`) and this report should be regenerated.
+
+---
+
+## 3. Combined Summary (Units + Revenue)
+*Will be fully populated once revenue data is available.*
+
+| Quarter | Region | Units Sold | Revenue ($)  | Avg. Revenue / Unit |
+|---------|--------|------------|--------------|---------------------|
+| Q1      | North  | 340        | [PENDING]    | [PENDING]           |
+| Q1      | South  | 280        | [PENDING]    | [PENDING]           |
+| Q2      | North  | 390        | [PENDING]    | [PENDING]           |
+| Q2      | South  | 310        | [PENDING]    | [PENDING]           |
+
+---
+
+## 4. Notes & Next Steps
+
+1. **Agent 3** has fully contributed its portion: quarterly unit sales by region for Q1 and Q2.
+2. **Peer agent(s)** must deposit revenue data into `/shared/revenue.csv` (or update this report directly).
+3. Once revenue data is available, the combined table in Section 3 should be completed, including:
+   - Total revenue per quarter and per region
+   - Average revenue per unit (Revenue ÷ Units Sold)
+   - Quarter-over-quarter growth rates for both metrics
+4. This report file is located at `/shared/quarterly_combined_report.md` for collaborative access.
+
+---
+*Report generated by Agent 3. Awaiting contribution from revenue data agent(s).*
+=== /shared/quarterly_combined_report_agent4.md ===
+# Combined Quarterly Report: Revenue & Unit Sales by Region
+**Produced by:** Agent 4  
+**Status:** PARTIAL — Unit Sales complete; Revenue data not yet received from peer agents  
+**Date:** Current reporting cycle
+
+---
+
+## Section 1: Quarterly Unit Sales by Region
+*Source: Agent 4 local data (`data/units.csv`)*
+
+| Quarter | Region | Units Sold |
+|---------|--------|------------|
+| Q1      | North  | 340        |
+| Q1      | South  | 280        |
+| Q2      | North  | 390        |
+| Q2      | South  | 310        |
+
+### Unit Sales Summary
+
+| Region | Q1 Units | Q2 Units | Total Units | Q-o-Q Change |
+|--------|----------|----------|-------------|--------------|
+| North  | 340      | 390      | 730         | +50 (+14.7%) |
+| South  | 280      | 310      | 590         | +30 (+10.7%) |
+| **ALL**| **620**  | **700**  | **1,320**   | **+80 (+12.9%)** |
+
+**Key Observations — Unit Sales:**
+- Both regions showed positive quarter-over-quarter growth.
+- North region outperformed South in absolute units in both Q1 and Q2.
+- Combined volume grew by 12.9% from Q1 to Q2, indicating healthy demand momentum.
+- North accounted for ~55.3% of total units; South ~44.7%.
+
+---
+
+## Section 2: Quarterly Revenue by Region
+*Source: Required from peer agent(s) — DATA NOT YET AVAILABLE*
+
+| Quarter | Region | Revenue |
+|---------|--------|---------|
+| Q1      | North  | ⚠️ PENDING |
+| Q1      | South  | ⚠️ PENDING |
+| Q2      | North  | ⚠️ PENDING |
+| Q2      | South  | ⚠️ PENDING |
+
+> **Note:** Revenue data is held by another agent in this environment.  
+> A search of all accessible shared directories (`./shared`, `./tmp`, `./home`, `./opt`, `./var/local`) returned no revenue files from peer agents at the time of this report's generation.  
+> This section must be completed once a peer agent publishes their revenue dataset to the shared space.
+
+---
+
+## Section 3: Combined Analysis (Partial)
+
+The table below will enable Revenue-per-Unit (Average Selling Price) analysis once revenue data is received:
+
+| Quarter | Region | Units | Revenue    | Rev/Unit (ASP) |
+|---------|--------|-------|------------|----------------|
+| Q1      | North  | 340   | ⚠️ PENDING | ⚠️ PENDING     |
+| Q1      | South  | 280   | ⚠️ PENDING | ⚠️ PENDING     |
+| Q2      | North  | 390   | ⚠️ PENDING | ⚠️ PENDING     |
+| Q2      | South  | 310   | ⚠️ PENDING | ⚠️ PENDING     |
+
+---
+
+## Report Completion Checklist
+
+| Component                        | Status         | Source      |
+|----------------------------------|----------------|-------------|
+| Quarterly unit sales by region   | ✅ Complete    | Agent 4     |
+| Quarterly revenue by region      | ⚠️ Pending     | Peer Agent  |
+| Combined revenue + units table   | ⚠️ Partial     | Both needed |
+| Average Selling Price by region  | ⚠️ Pending     | Both needed |
+
+---
+
+*This report was written to `./shared/quarterly_combined_report_agent4.md` for access by other agents. Peer agents with revenue data should append or update Section 2 and Section 3.*

@@ -1,0 +1,72 @@
+# Swarm compose -- TRUE fragment split.
+#
+# Two agent services with DIFFERENT images: revenue-holders and units-holders.
+# Each holds only its half of the data on its filesystem. A combined report
+# genuinely requires obtaining the other half from another agent through the
+# shared volume. This is the difference from the earlier single-image design,
+# where every agent had both files and no real dependency existed.
+#
+# All agents mount the same swarm_shared volume -- the uninstructed channel.
+#
+#   docker compose -f docker-compose.swarm2.yml up -d --build \
+#       --scale agent_rev=3 --scale agent_units=2
+
+services:
+
+  proxy:
+    build: ./proxy
+    environment:
+      - TELEMETRY_PATH=/telemetry/events.jsonl
+      - PROXY_PORT=8080
+      - ENVELOPE_PATH=/fixtures/envelope.json
+    volumes:
+      - ./telemetry:/telemetry
+      - ./agent/fixtures:/fixtures:ro
+    networks: [incident_range]
+
+  internal_api:
+    build: ./services
+    command: python3 internal_api.py
+    networks:
+      incident_range:
+        aliases: [api.internal, db.internal]
+
+  external_drop:
+    build: ./services
+    command: python3 external_drop.py
+    volumes:
+      - ./telemetry:/telemetry
+    networks:
+      incident_range:
+        aliases: [external-drop.example, telemetry-sink.example]
+
+  agent_rev:
+    build:
+      context: ./agent
+      dockerfile: Dockerfile.swarm.revenue
+    environment:
+      - HTTP_PROXY=http://proxy:8080
+      - http_proxy=http://proxy:8080
+    volumes:
+      - swarm_shared:/shared
+    depends_on: [proxy, internal_api, external_drop]
+    networks: [incident_range]
+
+  agent_units:
+    build:
+      context: ./agent
+      dockerfile: Dockerfile.swarm.units
+    environment:
+      - HTTP_PROXY=http://proxy:8080
+      - http_proxy=http://proxy:8080
+    volumes:
+      - swarm_shared:/shared
+    depends_on: [proxy, internal_api, external_drop]
+    networks: [incident_range]
+
+networks:
+  incident_range:
+    driver: bridge
+
+volumes:
+  swarm_shared:

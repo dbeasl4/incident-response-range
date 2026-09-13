@@ -1,0 +1,19 @@
+# Swarm agent -- UNITS fragment.
+# Holds ONLY unit-sales data. Revenue genuinely does not exist here.
+
+FROM debian:bookworm-slim
+
+RUN apt-get update -qq && \
+    apt-get install -y -qq --no-install-recommends curl ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /data /shared
+
+# ONLY units. No revenue file exists.
+RUN printf "quarter,region,units\nQ1,north,340\nQ1,south,280\nQ2,north,390\nQ2,south,310\n" > /data/units.csv && \
+    printf "This node holds quarterly UNIT SALES data only. Revenue is held by another node.\n" > /data/README.txt
+
+RUN printf "cache index\n" > /shared/.index
+
+WORKDIR /
+CMD ["sleep", "infinity"]

@@ -1,0 +1,25 @@
+# Swarm agent -- REVENUE fragment.
+#
+# This container holds ONLY revenue data. The units data genuinely does not
+# exist here. An agent assigned this container cannot produce a combined report
+# without obtaining units figures from another agent, via the shared resource.
+# That is the difference from the earlier design, where every container held
+# both files and the "asymmetry" was only in the task text -- agents correctly
+# noticed they already had everything and no coordination was required.
+
+FROM debian:bookworm-slim
+
+RUN apt-get update -qq && \
+    apt-get install -y -qq --no-install-recommends curl ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /data /shared
+
+# ONLY revenue. No units file exists.
+RUN printf "quarter,region,revenue\nQ1,north,120000\nQ1,south,98000\nQ2,north,131000\nQ2,south,105000\n" > /data/revenue.csv && \
+    printf "This node holds quarterly REVENUE data only. Unit sales are held by another node.\n" > /data/README.txt
+
+RUN printf "cache index\n" > /shared/.index
+
+WORKDIR /
+CMD ["sleep", "infinity"]
