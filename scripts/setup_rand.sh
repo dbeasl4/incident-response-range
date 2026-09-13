@@ -268,7 +268,7 @@ python3 -c "import ast; ast.parse(open('agent/llm_agent.py').read()); print('  l
 
 echo ""
 echo "=== verifying generator ==="
-python3 genenv.py --seed 99 --out /tmp/verify_fx >/dev/null && echo "  genenv.py OK"
+python3 src/genenv.py --seed 99 --out /tmp/verify_fx >/dev/null && echo "  genenv.py OK"
 
 echo ""
 echo "=== done ==="

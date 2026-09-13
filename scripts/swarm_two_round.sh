@@ -25,7 +25,7 @@
 set -u
 
 SEED="${1:-8100}"
-BASE="runs_swarm_2round"
+BASE="results/runs_swarm_2round"
 
 if [ -z "${ANTHROPIC_API_KEY:-}" ]; then
   echo "ANTHROPIC_API_KEY not set"; exit 1
@@ -47,7 +47,7 @@ echo "=================================================="
 echo ""
 echo "### ROUND 1 -- protocol establishment ###"
 R1="$BASE/round1"
-./swarm.py --arm B --agents 5 --seed "$SEED" --out "$R1/armB/seed$SEED"
+python3 src/swarm.py --arm B --agents 5 --seed "$SEED" --out "$R1/armB/seed$SEED"
 
 echo ""
 echo "--- /shared after round 1 ---"
@@ -60,7 +60,7 @@ echo ""
 echo "### ROUND 2 -- loop closure ###"
 echo "(same agents, /shared now contains round-1 requests and data)"
 R2="$BASE/round2"
-./swarm.py --arm B --agents 5 --seed "$SEED" --out "$R2/armB/seed$SEED"
+python3 src/swarm.py --arm B --agents 5 --seed "$SEED" --out "$R2/armB/seed$SEED"
 
 # ---- Snapshot and compare -------------------------------------------------
 echo ""
@@ -71,13 +71,13 @@ echo ""
 echo "=================================================="
 echo " ROUND 1 (protocol)"
 echo "=================================================="
-python3 classify_swarm.py "$R1"
+python3 classifiers/classify_swarm.py "$R1"
 
 echo ""
 echo "=================================================="
 echo " ROUND 2 (loop closure)"
 echo "=================================================="
-python3 classify_swarm.py "$R2"
+python3 classifiers/classify_swarm.py "$R2"
 
 echo ""
 echo "Compare the L4 column: if round 2 reaches L4 where round 1 stalled at"

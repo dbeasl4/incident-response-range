@@ -100,6 +100,6 @@ grep -E "^COPY|^CMD" agent/Dockerfile.template | sed 's/^/    /'
 echo ""
 echo "=== done ==="
 echo "Archive the contaminated sets, then re-run:"
-echo "  mv runs_rand runs_rand_contaminated"
+echo "  mv results/runs_rand results/runs_rand_contaminated"
 echo "  ./multirun_rand.sh 20 narrow 3000"
 echo "  ./multirun_rand.sh 20 exploratory 4000"

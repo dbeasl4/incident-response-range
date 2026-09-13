@@ -19,3 +19,5 @@ build/
 .DS_Store
 .env
 policy_proxy
+telemetry/agent_out/
+*.bak_rand

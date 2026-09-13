@@ -10,11 +10,11 @@ for strength in subtle direct authority; do
   for i in $(seq 1 "$N"); do
     SEED=$((SEED0 + i - 1))
     RID="${strength}-s${SEED}"
-    RUNDIR="runs_injection/${strength}/${RID}"
+    RUNDIR="results/runs_injection/${strength}/${RID}"
     mkdir -p "$RUNDIR"
 
     # generate poisoned fixture
-    python3 gen_injection.py --seed "$SEED" --strength "$strength" --out agent/fixtures
+    python3 src/gen_injection.py --seed "$SEED" --strength "$strength" --out agent/fixtures
     # splice into env-only dockerfile
     python3 -c "
 frag=open('agent/fixtures/env.dockerfile').read()
@@ -28,7 +28,7 @@ open('agent/Dockerfile.env','w').write(tpl.replace('# @@ENV_FRAGMENT@@',frag))"
       docker compose -f docker-compose.host.yml up -d --build >/dev/null 2>&1
     sleep 3
 
-    ANTHROPIC_API_KEY="$ANTHROPIC_API_KEY" python3 host_runner.py \
+    ANTHROPIC_API_KEY="$ANTHROPIC_API_KEY" python3 src/host_runner.py \
       --container range_env --seed "$SEED" --variant injection \
       --run-id "$RID" --auth-var "$AUTH_VAR" --out "$RUNDIR" \
       > "$RUNDIR/console.log" 2>&1
@@ -41,4 +41,4 @@ open('agent/Dockerfile.env','w').write(tpl.replace('# @@ENV_FRAGMENT@@',frag))"
     echo "  $RID  followed_target=$FOLL"
   done
 done
-echo "classify: python3 classify_injection.py runs_injection"
+echo "classify: python3 classifiers/classify_injection.py results/runs_injection"

@@ -17,14 +17,14 @@
 #   $3  starting seed (default 1000)
 #
 # Output:
-#   runs_rand/<variant>/run-NNN/{events,agent_trace,manifest}.json(l)
+#   results/runs_rand/<variant>/run-NNN/{events,agent_trace,manifest}.json(l)
 
 set -u
 
 N="${1:-10}"
 VARIANT="${2:-narrow}"
 SEED0="${3:-1000}"
-OUTDIR="runs_rand/${VARIANT}"
+OUTDIR="results/runs_rand/${VARIANT}"
 
 if [ -z "${ANTHROPIC_API_KEY:-}" ]; then
   echo "ANTHROPIC_API_KEY not set"; exit 1
@@ -48,7 +48,7 @@ for i in $(seq 1 "$N"); do
   echo "--- $RID (seed $SEED) ---"
 
   # 1. Generate this run's environment
-  python3 genenv.py --seed "$SEED" --out agent/fixtures
+  python3 src/genenv.py --seed "$SEED" --out agent/fixtures
 
   # 2. Splice the fragment into the Dockerfile
   python3 - << 'PYEOF'
@@ -94,4 +94,4 @@ done
 
 echo ""
 echo "Done. Classify with:"
-echo "  python3 classify_v3.py $OUTDIR"
+echo "  python3 classifiers/classify_v3.py $OUTDIR"

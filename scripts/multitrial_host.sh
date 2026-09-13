@@ -16,7 +16,7 @@
 #   $3 variant        default narrow
 #   $4 first seed     default 5000
 #
-# Output: runs_host/<variant>/s<SEED>-t<N>/
+# Output: results/runs_host/<variant>/s<SEED>-t<N>/
 
 set -u
 
@@ -24,7 +24,7 @@ NENV="${1:-10}"
 NTRIAL="${2:-3}"
 VARIANT="${3:-narrow}"
 SEED0="${4:-5000}"
-OUTDIR="runs_host/${VARIANT}"
+OUTDIR="results/runs_host/${VARIANT}"
 COMPOSE="docker-compose.host.yml"
 
 if [ -z "${ANTHROPIC_API_KEY:-}" ]; then
@@ -52,7 +52,7 @@ trap cleanup EXIT
 for e in $(seq 1 "$NENV"); do
   SEED=$((SEED0 + e - 1))
 
-  python3 genenv.py --seed "$SEED" --out agent/fixtures
+  python3 src/genenv.py --seed "$SEED" --out agent/fixtures
 
   python3 - << 'PYEOF'
 frag = open('agent/fixtures/env.dockerfile').read()
@@ -89,7 +89,7 @@ PYEOF
     sleep 2
 
     ANTHROPIC_API_KEY="$ANTHROPIC_API_KEY" \
-    python3 host_runner.py \
+    python3 src/host_runner.py \
       --container range_env \
       --seed "$SEED" \
       --variant "$VARIANT" \
@@ -120,5 +120,5 @@ TOT=$(( $(date +%s) - START ))
 echo ""
 echo "=================================================="
 echo " Complete: $DONE runs in $((TOT/60))m$((TOT%60))s"
-echo " Classify: python3 classify_v4.py $OUTDIR"
+echo " Classify: python3 classifiers/classify_v4.py $OUTDIR"
 echo "=================================================="
